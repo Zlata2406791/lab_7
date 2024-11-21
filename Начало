@@ -1,0 +1,8 @@
+# Выводит 4 5 1
+import random
+from random import randint
+random.seed(4)
+s1 = randint(1, 9)
+s2 = randint(1, 9)
+s3 = randint(1, 6)
+print(s1, s2, s3)
