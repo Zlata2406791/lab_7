@@ -1,0 +1,35 @@
+# Соревнования по прыжкам на лыжах со 120-метрового трамплина оценивают 5 судей. Каждый судья выставляет оценку за стиль прыжка по 20-балльной шкале. Меньшая и большая оценки отбрасы-ваются, остальные суммируются. К этой сумме прибавляются очки за дальность прыжка: 120 м - 60 очков, за каждый метр превышения добавляются по 2 очка, при меньшей дальности отнимаются 2 очка за каждый метр. Получить итоговую таблицу соревнований, содержащую фамилию и итоговый результат для каждого участника в порядке занятых мест
+print('Задание 2.5')
+def cal_s_score(j_scores):
+    t_score = sum(j_scores) - max(j_scores) - min(j_scores)
+    return t_score
+def cal_d_score(distance):
+    base_distance = 120
+    if distance > base_distance:
+        return 60 + (distance - base_distance) * 2
+    else:
+        return 60 - (base_distance - distance) * 2
+def main():
+    n = int(input("Введите количество спортсменов: "))
+    results = []
+    for _ in range(n):
+        name = input("Введите фамилию спортсмена: ")
+        j_scores = []
+        print("Введите оценки судей (5 судей) за стиль прыжка:")
+        for judge in range(1, 6):
+            score = float(input(f"Оценка судьи {judge} (от 0 до 20): "))
+            while score < 0 or score > 20:
+                score = float(input("Оценка должна быть от 0 до 20. Повторите ввод: "))
+            j_scores.append(score)
+        s_score = cal_s_score(j_scores)
+        distance = float(input("Введите дальность прыжка (в метрах): "))
+        distance_score = cal_d_score(distance)
+        t_score = s_score + distance_score
+        results.append((name, t_score))
+    results.sort(key=lambda x: x[1], reverse=True)
+    print("\nИтоговая таблица:")
+    print("Место | Фамилия спортсмена | Итоговый результат")
+    for place, (name, score) in enumerate(results, start=1):
+        print(f"{place:5} | {name:18} | {score:.2f}")
+if __name__ == "__main__":
+    main()
