@@ -1,0 +1,35 @@
+# Результаты сессии содержат оценки 5 экзаменов по каждой группе. Определить средний балл для трех групп студентов одного потока и выдать список групп в порядке убывания среднего балла. Результаты вывести в виде таблицы с заголовком.
+print('Задание 3.1')
+class Group:
+    def __init__(self, name, grades):
+        self.name = name
+        self.grades = grades
+    def average_grade(self):
+        return sum(self.grades) / len(self.grades) if self.grades else 0
+def main():
+    groups = []
+    for i in range(1, 4):
+        while True:
+            group_name = input(f"Введите название группы {i}: ")
+            if group_name.strip():
+                break
+            print("Ошибка: Название группы не может быть пустым.")
+        while True:
+            grades_input = input(f"Введите оценки для группы '{group_name}' через пробел: ")
+            try:
+                grades = list(map(float, grades_input.split()))
+                if not grades:
+                    raise ValueError
+                break
+            except ValueError:
+                print("Ошибка: Пожалуйста, введите корректные числовые оценки.")
+        groups.append(Group(group_name, grades))
+    groups.sort(key=lambda g: g.average_grade(), reverse=True)
+    print("\nРезультаты сессии:")
+    print(f"{'Группа':<20}{'Средний балл':<15}")
+    print("-" * 35)
+    for group in groups:
+        print(f"{group.name:<20}{group.average_grade():<15.2f}")
+
+if __name__ == "__main__":
+    main()
